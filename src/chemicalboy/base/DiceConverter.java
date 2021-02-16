@@ -43,11 +43,56 @@ public class DiceConverter {
 
     public void calculate(String str){
 
+        int sign = 1;
+
         Pattern negative = Pattern.compile("-[k0-9]*");
         Matcher matcher = negative.matcher(str);
         if(matcher.matches()){
             System.out.println("negative " + str);
+            sign = -1;
         }
+
+        String str2 = str.replaceAll("\\+|-","");
+
+        System.out.println("after replace " + str2);
+
+        Pattern dice = Pattern.compile("[kK]");
+        Matcher matcher1 = dice.matcher(str2);
+
+        if(matcher1.find()){
+            System.out.println("It is k : " + str2);
+
+            calculate2(str2);
+
+
+
+
+        }
+
+    }
+
+    public void calculate2(String str){
+
+        int howManyRoll = 1;
+        int howDice;
+
+        String[] rollDice = str.split("[kK]");
+
+        System.out.println(Arrays.toString(rollDice));
+
+        if(rollDice[0].equals("")){
+            rollDice[0] = "1";
+        }
+
+        if(rollDice.length==2){
+            howManyRoll = Integer.parseInt(rollDice[0]);
+            howDice = Integer.parseInt(rollDice[1]);
+        }else{
+            howDice = Integer.parseInt(rollDice[0]);
+        }
+
+        System.out.println(String.format("%s it means %s rolls by %s -sided dice", str, howManyRoll, howDice));
+
 
     }
 
