@@ -15,9 +15,11 @@ public class Main {
 
         while(!itIsOK){
 
-            String strToCheck = scanner.next();
+            // String strToCheck = scanner.nextLine();
 
-            itIsOK = diceConverter.checkData(strToCheck);
+            String str1 = "k100 -3k12+2k10 -1k4 + 2 ";
+
+            itIsOK = diceConverter.checkData(str1);
 
         }
 
