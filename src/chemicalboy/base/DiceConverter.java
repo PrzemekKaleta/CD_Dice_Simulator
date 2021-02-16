@@ -2,6 +2,8 @@ package chemicalboy.base;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DiceConverter {
 
@@ -10,45 +12,43 @@ public class DiceConverter {
 
         String str2 = str.replaceAll("\\s","");
 
-        System.out.println(str2);
-
-        char[] takeAll = str2.toCharArray();
-
-        System.out.println(Arrays.toString(takeAll));
+        System.out.print(str2 +" ");
 
 
-        String[] part = str2.split("\\+");
+        //System.out.println("IV: " + Arrays.toString(str2.split("(?=\\+)|(?=-)")));
+        ArrayList<String> allNeed = new ArrayList<>();
+        String[] xxx = (str2.split("(?=\\+)|(?=-)"));
 
-        for(int i = 0; i < part.length ; i++){
-            System.out.println(part[i]);
-        }
+        boolean isOk = true;
 
+        for(int i = 0; i < xxx.length; i++){
 
-        //System.out.println("I: " + Arrays.toString(str2.split("(?<=\\+)")));
-        System.out.println("II: " + Arrays.toString(str2.split("(?=\\+)")));
-        System.out.println("IV: " + Arrays.toString(str2.split("(?=\\+)|(?=-)")));
-        //System.out.println("III: " + Arrays.toString(str2.split("((?<=\\+)|(?=\\+))")));
+            Pattern pattern1 = Pattern.compile("[+-]?[1-9]*[Kk]?[1-9]+[0-9]*");
+            Matcher matcher1 = pattern1.matcher(xxx[i]);
+            //System.out.println(xxx[i]);
+            //System.out.println(matcher1.find());
+            //System.out.println(matcher1.matches());
 
-        ArrayList<Integer> positiveList = new ArrayList<>();
-        ArrayList<Integer> negativeList = new ArrayList<>();
+            calculate(xxx[i]);
 
-
-        for(int i = 0; i < takeAll.length; i++){
-
-            if(takeAll[i]=='-'){
-                negativeList.add(i);
-            }else if(takeAll[i]=='+'){
-                positiveList.add(i);
+            if(!matcher1.matches()){
+                isOk = false;
             }
 
-
         }
 
-        System.out.println(negativeList.toString());
-        System.out.println(positiveList.toString());
 
+        return isOk;
+    }
 
-        return true;
+    public void calculate(String str){
+
+        Pattern negative = Pattern.compile("-[k0-9]*");
+        Matcher matcher = negative.matcher(str);
+        if(matcher.matches()){
+            System.out.println("negative " + str);
+        }
+
     }
 
 
