@@ -8,28 +8,27 @@ import java.util.regex.Pattern;
 public class DiceConverter {
 
 
-    public boolean checkData(String str){
-
-        String str2 = str.replaceAll("\\s","");
-
-        System.out.print(str2 +" ");
-
-
-        //System.out.println("IV: " + Arrays.toString(str2.split("(?=\\+)|(?=-)")));
-        ArrayList<String> allNeed = new ArrayList<>();
-        String[] xxx = (str2.split("(?=\\+)|(?=-)"));
+    public boolean checkData(String combination){
 
         boolean isOk = true;
 
-        for(int i = 0; i < xxx.length; i++){
+
+        //combination.length()
+
+        String combinationCleared = combination.replaceAll("\\s","");
+
+        String[] splitCombination = (combinationCleared.split("(?=\\+)|(?=-)"));
+
+
+        for(int i = 0; i < splitCombination.length; i++){
 
             Pattern pattern1 = Pattern.compile("[+-]?[1-9]*[Kk]?[1-9]+[0-9]*");
-            Matcher matcher1 = pattern1.matcher(xxx[i]);
-            //System.out.println(xxx[i]);
+            Matcher matcher1 = pattern1.matcher(splitCombination[i]);
+            //System.out.println(splitCombination[i]);
             //System.out.println(matcher1.find());
             //System.out.println(matcher1.matches());
 
-            calculate(xxx[i]);
+            calculate(splitCombination[i]);
 
             if(!matcher1.matches()){
                 isOk = false;

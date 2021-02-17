@@ -6,12 +6,23 @@ public class Main {
 
     public static void main(String[] args) {
 
-        boolean itIsOK = false;
+        boolean wePlay = true;
 
         Scanner scanner = new Scanner(System.in);
         DiceConverter diceConverter = new DiceConverter();
 
-        System.out.println("Wpisz kombinacje dla kości");
+
+        Listener listener = new Listener();
+
+        listener.hello();
+
+        while(wePlay){
+
+
+
+
+
+        }
 
         String strOK1 = "2k10";
         String strOK2 = "-k12";
@@ -29,12 +40,12 @@ public class Main {
         String strNOK7 = "3Kk8+  4k20 -16";
 
 
-        System.out.println(diceConverter.checkData(strOK1));
+/*        System.out.println(diceConverter.checkData(strOK1));
         System.out.println(diceConverter.checkData(strOK2));
         System.out.println(diceConverter.checkData(strOK3));
         System.out.println(diceConverter.checkData(strOK4));
         System.out.println(diceConverter.checkData(strOK5));
-        System.out.println(diceConverter.checkData(strOK6));
+        System.out.println(diceConverter.checkData(strOK6));*/
 /*        System.out.println(diceConverter.checkData(strNOK1));
         System.out.println(diceConverter.checkData(strNOK2));
         System.out.println(diceConverter.checkData(strNOK3));
