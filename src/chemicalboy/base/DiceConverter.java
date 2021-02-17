@@ -1,6 +1,5 @@
 package chemicalboy.base;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,9 +11,6 @@ public class DiceConverter {
 
         boolean isOk = true;
 
-
-        //combination.length()
-
         String combinationCleared = combination.replaceAll("\\s","");
 
         String[] splitCombination = (combinationCleared.split("(?=\\+)|(?=-)"));
@@ -24,9 +20,6 @@ public class DiceConverter {
 
             Pattern pattern1 = Pattern.compile("[+-]?[1-9]*[Kk]?[1-9]+[0-9]*");
             Matcher matcher1 = pattern1.matcher(splitCombination[i]);
-            //System.out.println(splitCombination[i]);
-            //System.out.println(matcher1.find());
-            //System.out.println(matcher1.matches());
 
             calculate(splitCombination[i]);
 

@@ -8,11 +8,49 @@ public class Listener {
     Talker talker = new Talker();
 
 
-
-
-
-    String hello(){
+    String hello (){
         talker.firstContact();
+        return main();
+
+    }
+
+    String statistic(){
+        System.out.println("statistic");
+        return main();
+    }
+
+    String roll(){
+
+        String rollCommand = "ROLL";
+        talker.myRules();
+        boolean rollIsOK = false;
+
+        while (!rollIsOK) {
+            String checkIt = scanner.nextLine();
+            if(whatUserWantShort(checkIt).equals("OK")){
+                System.out.println("roll to check and calculate");
+
+
+
+            }else{
+                rollCommand = checkIt;
+                rollIsOK = true;
+            }
+
+
+        }
+        return rollCommand;
+
+    }
+
+    String mix(){
+        System.out.println("mix");
+        return main();
+    }
+
+
+    String main(){
+
         talker.always();
         talker.mainMenu();
 
@@ -36,6 +74,26 @@ public class Listener {
         return toReturn;
 
     }
+
+    String whatUserWantShort(String str){
+        String toCheck = str.trim().toLowerCase();
+
+        String command = "OK";
+
+        switch (toCheck){
+            case "w":
+                command = "MAIN";
+                break;
+            case "q":
+                command = "QUIT";
+                break;
+        }
+
+        return command;
+
+    }
+
+
 
     String whatUserWant(String str){
         String command = "BAD";
