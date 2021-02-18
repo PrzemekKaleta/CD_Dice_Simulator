@@ -33,17 +33,19 @@ public class Listener {
             String checkIt = scanner.nextLine();
             String command = whatUserWantShort(checkIt);
             if(command.equals("OK")){
-                System.out.println("roll to check and calculate");
+
                 resultDTO = diceConverter.checkData(checkIt);
 
-                System.out.println(resultDTO.toString());
-
+                if(resultDTO.isCombinationIsOK()){
+                    System.out.println("Do przeliczenia");
+                }else{
+                    System.out.println(resultDTO.getInformationForUser());
+                }
 
             }else{
                 rollCommand = command;
                 rollIsOK = true;
             }
-
 
         }
         return rollCommand;

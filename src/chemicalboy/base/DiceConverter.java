@@ -12,17 +12,41 @@ public class DiceConverter {
     Talker talker = new Talker();
 
 
+
+    public ResultDTO justRoll(String combination){
+
+        String combinationCleared = combination.replaceAll("\\s","");
+
+        String[] splitCombination = (combinationCleared.split("(?=\\+)|(?=-)"));
+
+        for(int i = 0; i < splitCombination.length; i++) {
+
+            firstCrash(splitCombination[i]);
+
+
+
+        }
+
+        return resultDTO;
+    }
+
+
     public ResultDTO checkData(String combination){
 
         boolean isOk = true;
 
         String combinationCleared = combination.replaceAll("\\s","");
 
+        if(combinationCleared.length()==0){
+            resultDTO.setCombinationIsOK(false);
+            resultDTO.setInformationForUser(talker.emptyRequest());
+            resultDTO.setRollResult(0);
+        }
+
         if(combinationCleared.length() > dataRules.getMaximumLengthCombination()){
             resultDTO.setCombinationIsOK(false);
             resultDTO.setInformationForUser(talker.requestTooLong(combinationCleared.length(),dataRules.getMaximumLengthCombination()));
             resultDTO.setRollResult(0);
-            isOk = false;
         }else{
 
             String[] splitCombination = (combinationCleared.split("(?=\\+)|(?=-)"));
@@ -32,8 +56,6 @@ public class DiceConverter {
 
                 Pattern pattern1 = Pattern.compile("[+-]?[1-9]*[Kk]?[1-9]+[0-9]*");
                 Matcher matcher1 = pattern1.matcher(splitCombination[i]);
-
-                //calculate(splitCombination[i]);
 
                 if (!matcher1.matches()) {
                     isOk = false;
@@ -48,6 +70,7 @@ public class DiceConverter {
             }
 
             if(isOk){
+                justRoll(combination);
                 resultDTO.setCombinationIsOK(true);
                 resultDTO.setInformationForUser("OK");
                 resultDTO.setRollResult(1);
@@ -58,7 +81,7 @@ public class DiceConverter {
         return resultDTO;
     }
 
-    public void calculate(String str){
+    public ArrayList<DicePattern> firstCrash(String str){
 
         int sign = 1;
 
@@ -71,21 +94,22 @@ public class DiceConverter {
 
         String str2 = str.replaceAll("\\+|-","");
 
-        System.out.println("after replace " + str2);
-
         Pattern dice = Pattern.compile("[kK]");
         Matcher matcher1 = dice.matcher(str2);
 
         if(matcher1.find()){
             System.out.println("It is k : " + str2);
 
-            calculate2(str2);
+            diceCrush(str2);
 
+        }else {
+            System.out.println(Integer.parseInt(str2));
         }
 
     }
 
-    public void calculate2(String str){
+    public int[] diceCrush(String str){
+
 
         int howManyRoll = 1;
         int howDice;
@@ -104,10 +128,11 @@ public class DiceConverter {
         }else{
             howDice = Integer.parseInt(rollDice[0]);
         }
+        int[] toBack = {howManyRoll, howDice};
 
-        System.out.println(String.format("%s it means %s rolls by %s -sided dice", str, howManyRoll, howDice));
+        System.out.println(String.format("%s it means %s rolls by %s - sided dice", str, howManyRoll, howDice));
 
-
+        return toBack;
     }
 
 

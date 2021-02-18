@@ -19,7 +19,7 @@ public class Talker {
 
     void myRules(){
         System.out.println("Wybierz kombinację z pośród dostępnych kości: K3, K4, K6, K8, K10, K12, K20 i K100 lub stwórz swoją własną");
-        System.out.println("Wpisz kombinację np. 2K10 + k4 - 2 i zatwierdź ENTER");
+        System.out.println("Wpisz kombinację np. 2K10 + k4 - 2 i zatwierdź ENTER, pomiędzy kośćmi musi być znak + lub -");
     }
     void badRequest(){
         System.out.println("nieporawne polecenie spróbuj jeszcze raz");
@@ -32,7 +32,9 @@ public class Talker {
     String requestWithBadCombination(ArrayList<String> badCombination){
         return String.format("Nieporawne kombinacje w %s miejscach: %s", badCombination.size(), badCombination.toString());
 
-
+    }
+    String emptyRequest(){
+        return "Pusta kombinacja";
     }
 
 
