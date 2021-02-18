@@ -1,36 +1,61 @@
 package chemicalboy.base;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DiceConverter {
 
+    ResultDTO resultDTO = new ResultDTO();
+    DataRules dataRules = new DataRules();
+    Talker talker = new Talker();
 
-    public boolean checkData(String combination){
+
+    public ResultDTO checkData(String combination){
 
         boolean isOk = true;
 
         String combinationCleared = combination.replaceAll("\\s","");
 
-        String[] splitCombination = (combinationCleared.split("(?=\\+)|(?=-)"));
+        if(combinationCleared.length() > dataRules.getMaximumLengthCombination()){
+            resultDTO.setCombinationIsOK(false);
+            resultDTO.setInformationForUser(talker.requestTooLong(combinationCleared.length(),dataRules.getMaximumLengthCombination()));
+            resultDTO.setRollResult(0);
+            isOk = false;
+        }else{
 
+            String[] splitCombination = (combinationCleared.split("(?=\\+)|(?=-)"));
+            ArrayList<String> badSplitedCombination = new ArrayList<>();
 
-        for(int i = 0; i < splitCombination.length; i++){
+                for(int i = 0; i < splitCombination.length; i++) {
 
-            Pattern pattern1 = Pattern.compile("[+-]?[1-9]*[Kk]?[1-9]+[0-9]*");
-            Matcher matcher1 = pattern1.matcher(splitCombination[i]);
+                Pattern pattern1 = Pattern.compile("[+-]?[1-9]*[Kk]?[1-9]+[0-9]*");
+                Matcher matcher1 = pattern1.matcher(splitCombination[i]);
 
-            calculate(splitCombination[i]);
+                //calculate(splitCombination[i]);
 
-            if(!matcher1.matches()){
-                isOk = false;
+                if (!matcher1.matches()) {
+                    isOk = false;
+                    badSplitedCombination.add(splitCombination[i]);
+                }
+            }
+
+            if(!isOk){
+                resultDTO.setCombinationIsOK(false);
+                resultDTO.setInformationForUser(talker.requestWithBadCombination(badSplitedCombination));
+                resultDTO.setRollResult(0);
+            }
+
+            if(isOk){
+                resultDTO.setCombinationIsOK(true);
+                resultDTO.setInformationForUser("OK");
+                resultDTO.setRollResult(1);
             }
 
         }
 
-
-        return isOk;
+        return resultDTO;
     }
 
     public void calculate(String str){
@@ -55,9 +80,6 @@ public class DiceConverter {
             System.out.println("It is k : " + str2);
 
             calculate2(str2);
-
-
-
 
         }
 

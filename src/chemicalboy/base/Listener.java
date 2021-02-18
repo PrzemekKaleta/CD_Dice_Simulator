@@ -6,6 +6,9 @@ public class Listener {
 
     Scanner scanner = new Scanner(System.in);
     Talker talker = new Talker();
+    DiceConverter diceConverter = new DiceConverter();
+    DataRules dataRules = new DataRules();
+    ResultDTO resultDTO = new ResultDTO();
 
 
     String hello (){
@@ -25,15 +28,19 @@ public class Listener {
         talker.myRules();
         boolean rollIsOK = false;
 
+
         while (!rollIsOK) {
             String checkIt = scanner.nextLine();
-            if(whatUserWantShort(checkIt).equals("OK")){
+            String command = whatUserWantShort(checkIt);
+            if(command.equals("OK")){
                 System.out.println("roll to check and calculate");
+                resultDTO = diceConverter.checkData(checkIt);
 
+                System.out.println(resultDTO.toString());
 
 
             }else{
-                rollCommand = checkIt;
+                rollCommand = command;
                 rollIsOK = true;
             }
 

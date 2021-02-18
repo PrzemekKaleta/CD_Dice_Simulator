@@ -1,5 +1,7 @@
 package chemicalboy.base;
 
+import java.util.ArrayList;
+
 public class Talker {
 
     void firstContact(){
@@ -21,6 +23,16 @@ public class Talker {
     }
     void badRequest(){
         System.out.println("nieporawne polecenie spróbuj jeszcze raz");
+    }
+
+    String requestTooLong(int lenth, int board){
+        return String.format("zbyt długa kombinacja %s znaków, przy ograniczeniu %s znaków", lenth, board);
+    }
+
+    String requestWithBadCombination(ArrayList<String> badCombination){
+        return String.format("Nieporawne kombinacje w %s miejscach: %s", badCombination.size(), badCombination.toString());
+
+
     }
 
 

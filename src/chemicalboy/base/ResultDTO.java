@@ -1,5 +1,7 @@
 package chemicalboy.base;
 
+import java.util.StringJoiner;
+
 public class ResultDTO {
 
     private boolean combinationIsOK;
@@ -30,5 +32,14 @@ public class ResultDTO {
 
     public void setRollResult(int rollResult) {
         this.rollResult = rollResult;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", ResultDTO.class.getSimpleName() + "[", "]")
+                .add("combinationIsOK=" + combinationIsOK)
+                .add("informationForUser='" + informationForUser + "'")
+                .add("rollResult=" + rollResult)
+                .toString();
     }
 }
