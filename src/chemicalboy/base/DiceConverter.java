@@ -1,7 +1,7 @@
 package chemicalboy.base;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,14 +67,6 @@ public class DiceConverter {
 
                 }
 
-
-/*            if(rollDice.length==2){
-                howManyRoll = Integer.parseInt(rollDice[0]);
-                howDice = Integer.parseInt(rollDice[1]);
-            }else{
-                howDice = Integer.parseInt(rollDice[0]);
-            }*/
-
             }else {
                 DicePattern dicePattern = new DicePattern();
 
@@ -130,11 +122,8 @@ public class DiceConverter {
             }
 
             if(isOk){
-                System.out.println("AAAAAAAAAAAAAAAAAAAA");
-//                ArrayList<DicePattern> dicePatterns = allDicePattern(combination);
-                  resultDTO.setCombinationIsOK(true);
-//                resultDTO.setInformationForUser(dicePatterns.toString());
-//                resultDTO.setRollResult(1);
+                resultDTO.setCombinationIsOK(true);
+
             }
 
         }
@@ -142,59 +131,54 @@ public class DiceConverter {
         return resultDTO;
     }
 
-/*    public ArrayList<DicePattern> firstCrash(String str){
+    public ResultDTO rollsResult (ArrayList<DicePattern> dicePatterns){
 
-        int sign = 1;
+        Random random = new Random();
+        ResultDTO resultDTO = new ResultDTO();
+        StringBuilder stringBuilder = new StringBuilder();
 
-        Pattern negative = Pattern.compile("-[k0-9]*");
-        Matcher matcher = negative.matcher(str);
-        if(matcher.matches()){
-            System.out.println("negative " + str);
-            sign = -1;
+        resultDTO.setCombinationIsOK(true);
+
+        int result = 0;
+
+        for(int i = 0; i < dicePatterns.size(); i++){
+
+            int sign = 1;
+
+            if(!dicePatterns.get(i).isPositive()){
+                sign = -1;
+                stringBuilder.append("(-)");
+            }
+
+            if(dicePatterns.get(i).isItIsDice()){
+
+                int sides = dicePatterns.get(i).getSides();
+                int rollResult = random.nextInt(sides) + 1;
+
+                if(!dicePatterns.get(i).isStandardDice){
+                    stringBuilder.append("(typ nieznany)");
+                }
+
+                stringBuilder.append("k" + sides + "=" + rollResult + " ");
+
+                result = result + (sign * rollResult);
+
+
+
+            }else{
+                stringBuilder.append(dicePatterns.get(i).getConstant() + " ");
+                result = result + (sign * dicePatterns.get(i).getConstant());
+            }
+
         }
 
-        String str2 = str.replaceAll("\\+|-","");
+        System.out.println(result);
+        String rollInformation = stringBuilder.toString().trim();
+        resultDTO.setInformationForUser("Przebieg: " + rollInformation);
+        resultDTO.setRollResult(result);
 
-        Pattern dice = Pattern.compile("[kK]");
-        Matcher matcher1 = dice.matcher(str2);
+        return resultDTO;
 
-        if(matcher1.find()){
-            System.out.println("It is k : " + str2);
-
-            diceCrush(str2);
-
-        }else {
-            System.out.println(Integer.parseInt(str2));
-        }
-
-    }*/
-
-/*    public int[] diceCrush(String str){
-
-
-        int howManyRoll = 1;
-        int howDice;
-
-        String[] rollDice = str.split("[kK]");
-
-        System.out.println(Arrays.toString(rollDice));
-
-        if(rollDice[0].equals("")){
-            rollDice[0] = "1";
-        }
-
-        if(rollDice.length==2){
-            howManyRoll = Integer.parseInt(rollDice[0]);
-            howDice = Integer.parseInt(rollDice[1]);
-        }else{
-            howDice = Integer.parseInt(rollDice[0]);
-        }
-        int[] toBack = {howManyRoll, howDice};
-
-        System.out.println(String.format("%s it means %s rolls by %s - sided dice", str, howManyRoll, howDice));
-
-        return toBack;
-    }*/
-
+    }
 
 }

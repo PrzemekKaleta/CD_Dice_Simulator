@@ -39,10 +39,9 @@ public class Listener {
 
                 if(resultDTO.isCombinationIsOK()){
                     ArrayList<DicePattern> dicePatterns = diceConverter.allDicePattern(checkIt);
-                    for(int i = 0; i < dicePatterns.size(); i++){
-
-                        System.out.println(dicePatterns.get(i).toString());
-                    }
+                    resultDTO = diceConverter.rollsResult(dicePatterns);
+                    System.out.println(resultDTO.getInformationForUser());
+                    System.out.println("Wynik: " + resultDTO.getRollResult());
                 }else{
                     System.out.println(resultDTO.getInformationForUser());
                 }
