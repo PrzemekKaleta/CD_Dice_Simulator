@@ -1,5 +1,6 @@
 package chemicalboy.base;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Listener {
@@ -37,7 +38,11 @@ public class Listener {
                 resultDTO = diceConverter.checkData(checkIt);
 
                 if(resultDTO.isCombinationIsOK()){
-                    System.out.println("Do przeliczenia");
+                    ArrayList<DicePattern> dicePatterns = diceConverter.allDicePattern(checkIt);
+                    for(int i = 0; i < dicePatterns.size(); i++){
+
+                        System.out.println(dicePatterns.get(i).toString());
+                    }
                 }else{
                     System.out.println(resultDTO.getInformationForUser());
                 }

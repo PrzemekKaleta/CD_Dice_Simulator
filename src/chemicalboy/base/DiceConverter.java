@@ -12,22 +12,82 @@ public class DiceConverter {
     Talker talker = new Talker();
 
 
+    public ArrayList<DicePattern> allDicePattern(String combination){
 
-    public ResultDTO justRoll(String combination){
-
+        ArrayList<DicePattern> dicePatternArrayList = new ArrayList<>();
         String combinationCleared = combination.replaceAll("\\s","");
 
         String[] splitCombination = (combinationCleared.split("(?=\\+)|(?=-)"));
 
         for(int i = 0; i < splitCombination.length; i++) {
 
-            firstCrash(splitCombination[i]);
+            boolean signPositive = true;
+
+            Pattern negative = Pattern.compile("-[k0-9]*");
+            Matcher matcher = negative.matcher(splitCombination[i]);
+            if(matcher.matches()){
+                signPositive = false;
+            }
+
+            String moduleSplitCombination = splitCombination[i].replaceAll("\\+|-","");
+
+            Pattern dice = Pattern.compile("[kK]");
+            Matcher matcher1 = dice.matcher(moduleSplitCombination);
+
+            if(matcher1.find()){
+
+                String[] splitedModule = moduleSplitCombination.split("[kK]");
+
+                if(splitedModule[0].equals("")){
+                    splitedModule[0] = "1";
+                }
+
+                int howManyRolls = Integer.parseInt(splitedModule[0]);
+                int howManySides = Integer.parseInt(splitedModule[1]);
+
+                boolean isStandard = false;
+
+                for(int k = 0; k < dataRules.getDiceSides().length; k++){
+
+                    if(howManySides == dataRules.getDiceSides()[k]){
+                        isStandard = true;
+                        break;
+                    }
+                }
+
+                for(int j = 0; j < howManyRolls; j++){
+                    DicePattern dicePattern = new DicePattern();
+
+                    dicePattern.setItIsDice(true);
+                    dicePattern.setPositive(signPositive);
+                    dicePattern.setSides(howManySides);
+                    dicePattern.setStandardDice(isStandard);
+
+                    dicePatternArrayList.add(dicePattern);
+
+                }
 
 
+/*            if(rollDice.length==2){
+                howManyRoll = Integer.parseInt(rollDice[0]);
+                howDice = Integer.parseInt(rollDice[1]);
+            }else{
+                howDice = Integer.parseInt(rollDice[0]);
+            }*/
+
+            }else {
+                DicePattern dicePattern = new DicePattern();
+
+                dicePattern.setItIsDice(false);
+                dicePattern.setPositive(signPositive);
+                dicePattern.setConstant(Integer.parseInt(moduleSplitCombination));
+
+                dicePatternArrayList.add(dicePattern);
+            }
 
         }
 
-        return resultDTO;
+        return dicePatternArrayList;
     }
 
 
@@ -70,10 +130,11 @@ public class DiceConverter {
             }
 
             if(isOk){
-                justRoll(combination);
-                resultDTO.setCombinationIsOK(true);
-                resultDTO.setInformationForUser("OK");
-                resultDTO.setRollResult(1);
+                System.out.println("AAAAAAAAAAAAAAAAAAAA");
+//                ArrayList<DicePattern> dicePatterns = allDicePattern(combination);
+                  resultDTO.setCombinationIsOK(true);
+//                resultDTO.setInformationForUser(dicePatterns.toString());
+//                resultDTO.setRollResult(1);
             }
 
         }
@@ -81,7 +142,7 @@ public class DiceConverter {
         return resultDTO;
     }
 
-    public ArrayList<DicePattern> firstCrash(String str){
+/*    public ArrayList<DicePattern> firstCrash(String str){
 
         int sign = 1;
 
@@ -106,9 +167,9 @@ public class DiceConverter {
             System.out.println(Integer.parseInt(str2));
         }
 
-    }
+    }*/
 
-    public int[] diceCrush(String str){
+/*    public int[] diceCrush(String str){
 
 
         int howManyRoll = 1;
@@ -133,7 +194,7 @@ public class DiceConverter {
         System.out.println(String.format("%s it means %s rolls by %s - sided dice", str, howManyRoll, howDice));
 
         return toBack;
-    }
+    }*/
 
 
 }
