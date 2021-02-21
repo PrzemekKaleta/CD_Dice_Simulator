@@ -41,6 +41,9 @@ public class Listener {
 
                 }else{
                     System.out.println(resultDTO.getInformationForUser());
+                    talker.myRules();
+                    talker.always();
+
                 }
 
             }else{
@@ -74,6 +77,9 @@ public class Listener {
                     System.out.println("Wynik: " + resultDTO.getRollResult());
                 }else{
                     System.out.println(resultDTO.getInformationForUser());
+                    talker.myRules();
+                    talker.always();
+
                 }
 
             }else{
@@ -87,8 +93,53 @@ public class Listener {
     }
 
     String mix(){
-        System.out.println("mix");
-        return main();
+        String mixCommand = "MIX";
+        talker.myRules();
+        boolean rollIsOK = false;
+
+        while (!rollIsOK) {
+            String checkIt = scanner.nextLine();
+            String command = whatUserWantShort(checkIt);
+            if(command.equals("OK")){
+
+                resultDTO = diceConverter.checkData(checkIt);
+
+                if(resultDTO.isCombinationIsOK()){
+                    ArrayList<DicePattern> dicePatterns = diceConverter.allDicePattern(checkIt);
+
+                    ArrayList<DiceChancePattern> diceChancePatterns = probabilityConveter.bigDiceChancePatternsMaker(dicePatterns);
+                    DiceChancePattern finalDiceChancePattern = probabilityConveter.butcherForMatrix(diceChancePatterns);
+                    probabilityConveter.printDiceChancePattern(finalDiceChancePattern);
+
+                    resultDTO = diceConverter.rollsResult(dicePatterns);
+                    System.out.println(resultDTO.getInformationForUser());
+
+                    int constant = probabilityConveter.getConstant();
+
+                    for(ChanceDotsDTO chanceDotsDTO : finalDiceChancePattern.getDiceChance()){
+                        if((chanceDotsDTO.getDots() + constant) == resultDTO.getRollResult()){
+                            double resultStatisticChance = chanceDotsDTO.getChance() * 100;
+                            System.out.println(String.format("Wynik: %s z szansą na powodzenie: %.2f %%", resultDTO.getRollResult(), resultStatisticChance));
+                        }
+                    }
+
+
+                }else{
+                    System.out.println(resultDTO.getInformationForUser());
+                    talker.myRules();
+                    talker.always();
+
+                }
+
+            }else{
+                mixCommand = command;
+                rollIsOK = true;
+            }
+
+        }
+
+        return mixCommand;
+
     }
 
 

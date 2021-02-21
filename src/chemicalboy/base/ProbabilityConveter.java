@@ -10,10 +10,12 @@ public class ProbabilityConveter {
 
     public void printDiceChancePattern(DiceChancePattern diceChancePattern){
 
-        for(int i = 0; i < diceChancePattern.getDiceChance().size(); i++){
+        List<ChanceDotsDTO> sortedDotsChanceDTOList = diceChancePattern.getDiceChance().stream().sorted(Comparator.comparing(ChanceDotsDTO::getDots)).collect(Collectors.toList());
 
-            int dots = diceChancePattern.getDiceChance().get(i).getDots();
-            double chance = diceChancePattern.getDiceChance().get(i).getChance() * 100;
+        for(int i = 0; i < sortedDotsChanceDTOList.size(); i++){
+
+            int dots = sortedDotsChanceDTOList.get(i).getDots() + constant;
+            double chance = sortedDotsChanceDTOList.get(i).getChance() * 100;
 
             System.out.println(String.format("result %s - %.2f %%", dots, chance));
 

@@ -172,7 +172,7 @@ public class DiceConverter {
 
         }
 
-        System.out.println(result);
+        //System.out.println(result);
         String rollInformation = stringBuilder.toString().trim();
         resultDTO.setInformationForUser("Przebieg: " + rollInformation);
         resultDTO.setRollResult(result);
