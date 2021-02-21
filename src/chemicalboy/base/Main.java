@@ -16,7 +16,7 @@ public class Main {
 
         ProbabilityConveter probabilityConveter = new ProbabilityConveter();
 
-        DiceChancePattern diceChancePattern = probabilityConveter.smallDiceChancePatternMaker(dicePattern, 1);
+        DiceChancePattern diceChancePattern = probabilityConveter.smallDiceChancePatternMaker(dicePattern, -1);
 
         System.out.println(Arrays.toString(diceChancePattern.getDiceChance().toArray()));
 

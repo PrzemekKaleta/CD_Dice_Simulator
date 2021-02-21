@@ -1,6 +1,7 @@
 package chemicalboy.base;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Listener {
@@ -10,6 +11,7 @@ public class Listener {
     DiceConverter diceConverter = new DiceConverter();
     DataRules dataRules = new DataRules();
     ResultDTO resultDTO = new ResultDTO();
+    ProbabilityConveter probabilityConveter = new ProbabilityConveter();
 
 
     String hello (){
@@ -18,9 +20,41 @@ public class Listener {
 
     }
 
+
     String statistic(){
-        System.out.println("statistic");
-        return main();
+
+        String statisticComand = "STATISTIC";
+        talker.myRules();
+        boolean rollIsOK = false;
+
+        while (!rollIsOK) {
+            String checkIt = scanner.nextLine();
+            String command = whatUserWantShort(checkIt);
+            if(command.equals("OK")){
+
+                resultDTO = diceConverter.checkData(checkIt);
+
+                if(resultDTO.isCombinationIsOK()){
+                    ArrayList<DicePattern> dicePatterns = diceConverter.allDicePattern(checkIt);
+                    ArrayList<DiceChancePattern> diceChancePatterns = probabilityConveter.bigDiceChancePatternsMaker(dicePatterns);
+
+                    //TODO Code to calculate propabilty
+
+                    System.out.println(Arrays.toString(diceChancePatterns.toArray()));
+                    System.out.println("Stała to : " + probabilityConveter.getConstant());
+
+                }else{
+                    System.out.println(resultDTO.getInformationForUser());
+                }
+
+            }else{
+                statisticComand = command;
+                rollIsOK = true;
+            }
+
+        }
+
+        return statisticComand;
     }
 
     String roll(){

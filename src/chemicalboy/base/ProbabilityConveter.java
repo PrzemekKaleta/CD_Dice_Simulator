@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 public class ProbabilityConveter {
 
+    private int constant;
+
 
     public ArrayList<DiceChancePattern> bigDiceChancePatternsMaker (ArrayList<DicePattern> dicePatterns){
 
         ArrayList<DiceChancePattern> diceChancePatterns = new ArrayList<>();
 
+        int cons = 0;
 
         for(int i = 0; i < dicePatterns.size(); i ++){
 
-            int constant = 0;
 
             DicePattern dicePattern = dicePatterns.get(i);
 
@@ -24,16 +26,20 @@ public class ProbabilityConveter {
 
             if(!dicePattern.isItIsDice()){
 
-                constant = constant + (sign * dicePattern.getConstant());
+                cons = cons + (sign * dicePattern.getConstant());
+
             }else{
 
                 diceChancePatterns.add(smallDiceChancePatternMaker(dicePattern, sign));
 
             }
 
-            dicePattern.setConstant(constant);
+
 
         }
+
+        System.out.println("Stała: " + cons);
+        this.constant = cons;
 
 
         return diceChancePatterns;
@@ -66,8 +72,11 @@ public class ProbabilityConveter {
 
     }
 
+    public int getConstant() {
+        return constant;
+    }
 
-
-
-
+    public void setConstant(int constant) {
+        this.constant = constant;
+    }
 }

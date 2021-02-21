@@ -1,12 +1,11 @@
 package chemicalboy.base;
 
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 public class DiceChancePattern {
 
     private ArrayList<ChanceDotsDTO> diceChance;
-
-    private int constant;
 
     public ArrayList<ChanceDotsDTO> getDiceChance() {
         return diceChance;
@@ -16,13 +15,10 @@ public class DiceChancePattern {
         this.diceChance = diceChance;
     }
 
-    public int getConstant() {
-        return constant;
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", DiceChancePattern.class.getSimpleName() + "[", "]")
+                .add("diceChance=" + diceChance)
+                .toString();
     }
-
-    public void setConstant(int constant) {
-        this.constant = constant;
-    }
-
-
 }
