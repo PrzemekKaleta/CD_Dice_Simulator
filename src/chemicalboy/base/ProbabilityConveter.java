@@ -7,9 +7,41 @@ public class ProbabilityConveter {
 
     private int constant;
 
+
+    public void printDiceChancePattern(DiceChancePattern diceChancePattern){
+
+        for(int i = 0; i < diceChancePattern.getDiceChance().size(); i++){
+
+            int dots = diceChancePattern.getDiceChance().get(i).getDots();
+            double chance = diceChancePattern.getDiceChance().get(i).getChance() * 100;
+
+            System.out.println(String.format("result %s - %.2f %%", dots, chance));
+
+        }
+
+    }
+
+
+    public DiceChancePattern butcherForMatrix(ArrayList<DiceChancePattern> allDCP){
+
+        int numberOfDCP = allDCP.size();
+
+        DiceChancePattern mixedDCP = allDCP.get(0);
+
+        for(int i = 1; i < numberOfDCP; i++){
+
+            mixedDCP = matrixResult(mixedDCP, allDCP.get(i));
+
+        }
+
+        return mixedDCP;
+
+    }
+
+
+
     public DiceChancePattern matrixResult(DiceChancePattern firstDCP, DiceChancePattern secondDCP){
 
-        DiceChancePattern longMatrixResult = new DiceChancePattern();
         DiceChancePattern shortMatrixResult = new DiceChancePattern();
 
         ArrayList<ChanceDotsDTO> longChanceDots = new ArrayList<>();
@@ -40,7 +72,6 @@ public class ProbabilityConveter {
         while(iterator.hasNext()){
 
             int dots = iterator.next();
-            System.out.println(dots);
             double propability = 0;
 
             for(int j = 0 ; j <longChanceDots.size(); j++) {
@@ -61,11 +92,7 @@ public class ProbabilityConveter {
 
          shortMatrixResult.setDiceChance(shortChanceDots);
 
-
-        System.out.println(posibleSumDots.toString());
-        System.out.println(Arrays.toString(shortMatrixResult.getDiceChance().toArray()));
-
-        return longMatrixResult;
+        return shortMatrixResult;
 
     }
 

@@ -8,7 +8,7 @@ public class Main {
 
         boolean wePlay = true;
 
-        DicePattern dicePattern1 = new DicePattern();
+ /*       DicePattern dicePattern1 = new DicePattern();
         DicePattern dicePattern2 = new DicePattern();
 
         dicePattern1.setItIsDice(true);
@@ -16,9 +16,9 @@ public class Main {
         dicePattern1.setSides(6);
         dicePattern2.setSides(6);
         dicePattern1.setPositive(true);
-        dicePattern2.setPositive(true);
+        dicePattern2.setPositive(true);*/
 
-        ProbabilityConveter probabilityConveter = new ProbabilityConveter();
+/*        ProbabilityConveter probabilityConveter = new ProbabilityConveter();
 
         DiceChancePattern diceChancePattern1 = probabilityConveter.smallDiceChancePatternMaker(dicePattern1, 1);
         DiceChancePattern diceChancePattern2 = probabilityConveter.smallDiceChancePatternMaker(dicePattern1, 1);
@@ -26,7 +26,7 @@ public class Main {
         System.out.println(Arrays.toString(diceChancePattern1.getDiceChance().toArray()));
         System.out.println(Arrays.toString(diceChancePattern2.getDiceChance().toArray()));
 
-        probabilityConveter.matrixResult(diceChancePattern1, diceChancePattern2);
+        probabilityConveter.matrixResult(diceChancePattern1, diceChancePattern2);*/
 
         Listener listener = new Listener();
 

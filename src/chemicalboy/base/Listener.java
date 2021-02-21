@@ -37,11 +37,7 @@ public class Listener {
                 if(resultDTO.isCombinationIsOK()){
                     ArrayList<DicePattern> dicePatterns = diceConverter.allDicePattern(checkIt);
                     ArrayList<DiceChancePattern> diceChancePatterns = probabilityConveter.bigDiceChancePatternsMaker(dicePatterns);
-
-                    //TODO Code to calculate propabilty
-
-                    System.out.println(Arrays.toString(diceChancePatterns.toArray()));
-                    System.out.println("Stała to : " + probabilityConveter.getConstant());
+                    probabilityConveter.printDiceChancePattern(probabilityConveter.butcherForMatrix(diceChancePatterns));
 
                 }else{
                     System.out.println(resultDTO.getInformationForUser());
